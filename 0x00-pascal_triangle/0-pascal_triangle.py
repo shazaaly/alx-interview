@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""module to draw pascal"""
 
 def pascal_triangle(n):
     """Pascal Triangle building function"""
