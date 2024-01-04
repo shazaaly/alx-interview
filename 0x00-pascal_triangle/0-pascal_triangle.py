@@ -2,12 +2,15 @@
 """module to draw pascal"""
 
 def pascal_triangle(n):
-    """Pascal Triangle building function"""
+    '''Creates a list of lists of
+    the Pascal's triangle.
+    '''
     if n <= 0:
         return []
 
     def helper(row, col):
-        """recurs"""
+        '''Recursion to calc each position.
+    '''
         if col == 0 or col == row:
             return 1
         return helper(row - 1, col - 1) + helper(row - 1, col)
