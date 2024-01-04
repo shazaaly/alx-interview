@@ -17,7 +17,8 @@ def pascal_triangle(n):
     for i in range(n):
         curr_row = []
         for j in range(i + 1):
-            curr_row.append(helper(i, j))
+            if i > 0 and j > 0:
+                curr_row.append(helper(i, j))
         triangle.append(curr_row)
 
     return triangle
