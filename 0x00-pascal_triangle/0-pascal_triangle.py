@@ -8,21 +8,15 @@ def pascal_triangle(n):
     if n <= 0 or type(n) is not int:
         return []
 
-    def helper(row, col):
-        '''Recursion to calc each position.
-    '''
-        if col == 0 or col == row:
-            return 1
-        return helper(row - 1, col - 1) + helper(row - 1, col)
-
     triangle = []
 
     for i in range(n):
-        curr_row = []
+        row = []
         for j in range(i + 1):
-            curr_row.append(helper(i, j))
-        triangle.append(curr_row)
+            if j == i or j == 0:
+                row.append(1)
+            if i > j and j > 0:
+                row.append(triangle[i - 1][j - 1] + triangle[i - 1][j])
+        triangle.append(row)
 
     return triangle
-
-
