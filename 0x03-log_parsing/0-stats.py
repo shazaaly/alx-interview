@@ -1,8 +1,12 @@
 #!/usr/bin/python3
+""" a script to generate stdout logs"""
+
+
 import sys
 import re
 
 def use_regex(input_text):
+    """ a function to generate stdout logs"""
     pattern = re.compile(r'^(\d{1,3}(\.\d{1,3}){3}) - (.*?) "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$')
     return pattern.match(input_text)
 
@@ -29,10 +33,6 @@ try:
 
             file_size = int(match.group(5))
             total_file_size += file_size
-except KeyboardInterrupt:
-    print(f"File size: {total_file_size}")
-    for status_code, count in possible_status_codes.items():
-        print(f"{status_code}: {count}")
 finally:
     print(f"File size: {total_file_size}")
     for status_code, count in possible_status_codes.items():
