@@ -22,11 +22,15 @@ possible_status_codes = {
 }
 
 total_file_size = 0
+lines_count = 0
+n = 1000000
 
 try:
     for line in sys.stdin:
+
         match = use_regex(line)
         if match:
+            lines_count += 1
             status_code = match.group(4)
             if status_code in possible_status_codes:
                 possible_status_codes[status_code] += 1
@@ -34,6 +38,8 @@ try:
             file_size = int(match.group(5))
             total_file_size += file_size
 finally:
-    print(f"File size: {total_file_size}")
-    for status_code, count in possible_status_codes.items():
-        print(f"{status_code}: {count}")
+    for i in range(n):
+        if lines_count == 10:
+            print(f"File size: {total_file_size}")
+            for status_code, count in possible_status_codes.items():
+                print(f"{status_code}: {count}")
