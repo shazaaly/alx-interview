@@ -23,7 +23,6 @@ possible_status_codes = {
 
 total_file_size = 0
 lines_count = 0
-n = 1000000
 
 try:
     for line in sys.stdin:
@@ -37,8 +36,13 @@ try:
 
             file_size = int(match.group(5))
             total_file_size += file_size
+        if lines_count == 10:
+            lines_count = 0
+            print(f"File size: {total_file_size}")
+            for status_code, count in possible_status_codes.items():
+                print(f"{status_code}: {count}")
+
 finally:
-    for i in range(n):
         if lines_count == 10:
             print(f"File size: {total_file_size}")
             for status_code, count in possible_status_codes.items():
