@@ -32,7 +32,7 @@ try:
         match = use_regex(line)
         if match:
             status_code = match.group(4)
-            if status_code in possible_status_codes:
+            if status_code in possible_status_codes.keys():
                 possible_status_codes[status_code] += 1
 
             file_size = int(match.group(5))
@@ -44,7 +44,7 @@ try:
                 print(f"{status_code}: {count}")
 
 finally:
-        # if lines_count == 10:
+        #if lines_count == 10:
             print(f"File size: {total_file_size}")
             for status_code, count in possible_status_codes.items():
                 print(f"{status_code}: {count}")
