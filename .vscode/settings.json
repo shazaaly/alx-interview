@@ -1,3 +1,4 @@
 {
-    "editor.fontFamily": "Fira Code iScript"
+    "editor.fontFamily": "Fira Code iScript",
+    "editor.fontSize": 16
 }
