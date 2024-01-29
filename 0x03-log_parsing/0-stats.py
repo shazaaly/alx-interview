@@ -44,7 +44,7 @@ try:
                 print(f"{status_code}: {count}")
 
 finally:
-        if lines_count == 10:
+        # if lines_count == 10:
             print(f"File size: {total_file_size}")
             for status_code, count in possible_status_codes.items():
                 print(f"{status_code}: {count}")
