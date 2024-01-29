@@ -26,10 +26,11 @@ lines_count = 0
 
 try:
     for line in sys.stdin:
+        lines_count += 1
+
 
         match = use_regex(line)
         if match:
-            lines_count += 1
             status_code = match.group(4)
             if status_code in possible_status_codes:
                 possible_status_codes[status_code] += 1
