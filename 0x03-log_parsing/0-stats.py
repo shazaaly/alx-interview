@@ -46,5 +46,5 @@ try:
 finally:
         #if lines_count == 10:
             print(f"File size: {total_file_size}")
-            for status_code, count in sort(possible_status_codes.items()):
+            for status_code, count in sorted(possible_status_codes.items()):
                 print(f"{status_code}: {count}")
