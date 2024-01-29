@@ -1,50 +1,54 @@
 #!/usr/bin/python3
-""" a script to generate stdout logs"""
-
 
 import sys
-import re
 
-def use_regex(input_text):
-    """ a function to generate stdout logs"""
-    pattern = re.compile(r'^(\d{1,3}(\.\d{1,3}){3}) - (.*?) "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$')
-    return pattern.match(input_text)
 
-possible_status_codes = {
-    "200": 0,
-    "301": 0,
-    "400": 0,
-    "401": 0,
-    "403": 0,
-    "404": 0,
-    "405": 0,
-    "500": 0,
-}
+def print_msg(dict_sc, total_file_size):
+    """
+    Method to print
+    Args:
+        dict_sc: dict of status codes
+        total_file_size: total of the file
+    Returns:
+        Nothing
+    """
+
+    print("File size: {}".format(total_file_size))
+    for key, val in sorted(dict_sc.items()):
+        if val != 0:
+            print("{}: {}".format(key, val))
+
 
 total_file_size = 0
-lines_count = 0
+code = 0
+counter = 0
+dict_sc = {"200": 0,
+           "301": 0,
+           "400": 0,
+           "401": 0,
+           "403": 0,
+           "404": 0,
+           "405": 0,
+           "500": 0}
 
 try:
     for line in sys.stdin:
-        lines_count += 1
+        parsed_line = line.split()  # ✄ trimming
+        parsed_line = parsed_line[::-1]  # inverting
 
+        if len(parsed_line) > 2:
+            counter += 1
 
-        match = use_regex(line)
-        if match:
-            status_code = match.group(4)
-            if status_code in possible_status_codes.keys():
-                possible_status_codes[status_code] += 1
+            if counter <= 10:
+                total_file_size += int(parsed_line[0])  # file size
+                code = parsed_line[1]  # status code
 
-            file_size = int(match.group(5))
-            total_file_size += file_size
-        if lines_count == 10:
-            lines_count = 0
-            print(f"File size: {total_file_size}")
-            for status_code, count in possible_status_codes.items():
-                print(f"{status_code}: {count}")
+                if (code in dict_sc.keys()):
+                    dict_sc[code] += 1
+
+            if (counter == 10):
+                print_msg(dict_sc, total_file_size)
+                counter = 0
 
 finally:
-        #if lines_count == 10:
-            print(f"File size: {total_file_size}")
-            for status_code, count in sorted(possible_status_codes.items()):
-                print(f"{status_code}: {count}")
+    print_msg(dict_sc, total_file_size)
