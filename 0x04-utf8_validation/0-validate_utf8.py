@@ -1,4 +1,4 @@
-#!user/bin/env python3
+#!/usr/bin/env python3
 
 """ A script to determines if a given data 
     set represents a valid UTF-8 encoding.
