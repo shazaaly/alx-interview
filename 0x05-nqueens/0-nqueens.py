@@ -1,68 +1,59 @@
 #!/usr/bin/python3
-"""
-Solution to the nqueens problem
-"""
+"""doc doc doc"""
 import sys
 
 
-def backtrack(r, n, cols, pos, neg, board):
-    """
-    backtrack function to find solution
-    """
-    if r == n:
-        res = []
-        for i in range(len(board)):
-            for k in range(len(board[i])):
-                if board[i][k] == 1:
-                    res.append([i, k])
-        print(res)
-        return
+def solve_queens_problem(board_size):
+    """doc doc doc"""
 
-    for c in range(n):
-        if c in cols or (r + c) in pos or (r - c) in neg:
-            continue
+    def is_valid_position(pos, occupied_pos):
+        """doc doc doc"""
+        for i in range(len(occupied_pos)):
+            if (
+                occupied_pos[i] == pos or
+                occupied_pos[i] - i == pos - len(occupied_pos) or
+                occupied_pos[i] + i == pos + len(occupied_pos)
+            ):
+                return False
+        return True
 
-        cols.add(c)
-        pos.add(r + c)
-        neg.add(r - c)
-        board[r][c] = 1
+    def place_queens(board_size, index, occupied_pos, solutions):
+        """doc doc doc"""
+        if index == board_size:
+            solutions.append(occupied_pos[:])
+            return
 
-        backtrack(r+1, n, cols, pos, neg, board)
+        for i in range(board_size):
+            if is_valid_position(i, occupied_pos):
+                occupied_pos.append(i)
+                place_queens(board_size, index + 1, occupied_pos, solutions)
+                occupied_pos.pop()
 
-        cols.remove(c)
-        pos.remove(r + c)
-        neg.remove(r - c)
-        board[r][c] = 0
-
-
-def nqueens(n):
-    """
-    Solution to nqueens problem
-    Args:
-        n (int): number of queens. Must be >= 4
-    Return:
-        List of lists representing coordinates of each
-        queen for all possible solutions
-    """
-    cols = set()
-    pos_diag = set()
-    neg_diag = set()
-    board = [[0] * n for i in range(n)]
-
-    backtrack(0, n, cols, pos_diag, neg_diag, board)
+    solutions = []
+    place_queens(board_size, 0, [], solutions)
+    return solutions
 
 
-if __name__ == "__main__":
-    n = sys.argv
-    if len(n) != 2:
+def main():
+    """doc doc doc"""
+    if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
+
     try:
-        nn = int(n[1])
-        if nn < 4:
-            print("N must be at least 4")
-            sys.exit(1)
-        nqueens(nn)
+        board_size = int(sys.argv[1])
     except ValueError:
         print("N must be a number")
         sys.exit(1)
+
+    if board_size < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    solutions = solve_queens_problem(board_size)
+    for solution in solutions:
+        print([[i, solution[i]] for i in range(len(solution))])
+
+
+if __name__ == "__main__":
+    main()
