@@ -20,7 +20,7 @@ const findMovie = (id) => {
           return;
         }
         const characterData = JSON.parse(body);
-        console.log(characterData.name);
+        return characterData.name;
       });
     }
   });
